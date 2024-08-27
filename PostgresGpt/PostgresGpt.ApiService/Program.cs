@@ -1,3 +1,5 @@
+using Carter;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using PostgresGpt.ApiService.Data;
 using PostgresGpt.ApiService.Options;
@@ -6,8 +8,13 @@ using PostgresGpt.ApiService.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
+var assembly = typeof(Program).Assembly;
 builder.AddServiceDefaults();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddValidatorsFromAssembly(assembly);
+builder.Services.AddCarter();
+
 builder.Services.AddSwaggerGen();
 //builder.Services.AddDbContext<ItemContext>(options =>
 //        options.UseNpgsql(builder.Configuration.GetConnectionString("TestDB"), o => o.UseVector()));
@@ -24,6 +31,7 @@ builder.Services.AddScoped<ChatService>();
 
 var app = builder.Build();
 
+app.MapCarter();
 // Configure the HTTP request pipeline.
 app.UseExceptionHandler();
 
