@@ -16,7 +16,7 @@ public class ChatService
     private readonly int _maxConversationTokens;
     private readonly double _cacheSimilarityScore;
 
-    public ChatService(IDBService dbService, ISemanticKernelService semanticKernelService, IOptions<Chat> options)
+    public ChatService(IDBService dbService, ISemanticKernelService semanticKernelService, IOptions<Options.Chat> options)
     {
         _dbService = dbService;
         //_openAiService = openAiService;

@@ -14,6 +14,7 @@ namespace PostgresGpt.ApiService.Services
         public PostgresDBService(ChatContext dbContext)
         {
             _dbContext = dbContext;
+            _dbContext.Database.EnsureCreated();
         }
         public async Task<Session> InsertSessionAsync(Session session)
         {

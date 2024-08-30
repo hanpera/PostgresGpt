@@ -34,4 +34,9 @@ public record Message
         Completion = completion;
         CompletionTokens = completionTokens;
     }
+
+    public Message()
+    {
+        
+    }
 }
