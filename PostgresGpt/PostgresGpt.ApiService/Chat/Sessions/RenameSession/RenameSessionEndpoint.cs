@@ -23,7 +23,7 @@ namespace PostgresGpt.ApiService.Chat.Sessions.RenameSession
                     return Results.NoContent();
                 })
             .WithName("RenameSession")
-            //.Produces<UpdateProductResponse>()
+            .Produces(StatusCodes.Status204NoContent)
             .ProducesProblem(StatusCodes.Status400BadRequest)
             .ProducesProblem(StatusCodes.Status500InternalServerError)
             //.ProducesProblem(StatusCodes.Status404NotFound)

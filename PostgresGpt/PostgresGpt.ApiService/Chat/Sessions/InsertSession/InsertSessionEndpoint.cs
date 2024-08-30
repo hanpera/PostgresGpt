@@ -23,7 +23,7 @@ namespace PostgresGpt.ApiService.Chat.Sessions.InsertSession
                         var response = result.Adapt<InsertSessionResponse>();
                         return Results.Created($"/sessions/{response.Session.Id}", response);
                     })
-                .WithName("InsrertSession")
+                .WithName("InsertSession")
                 .Produces<InsertSessionResponse>()
                 .ProducesProblem(StatusCodes.Status400BadRequest)
                 .WithSummary("Insert Session")

@@ -7,7 +7,7 @@ using PostgresGpt.ApiService.Models;
 
 namespace PostgresGpt.ApiService.Chat.Messages.GetChatSessionMessages
 {
-    public record GetChatSessionMessagesRequest(string sessionId) : IQuery<GetChatSessionMessagesResult>;
+    public record GetChatSessionMessagesRequest(string sessionId);
 
     public record GetChatSessionMessagesResponse(IEnumerable<Message> Messages);
 
