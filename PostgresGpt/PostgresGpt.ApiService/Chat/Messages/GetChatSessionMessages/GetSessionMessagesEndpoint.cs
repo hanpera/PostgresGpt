@@ -16,7 +16,7 @@ namespace PostgresGpt.ApiService.Chat.Messages.GetChatSessionMessages
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("/sessions/{sessionId}/messages", async (GetChatSessionMessagesRequest request, ISender sender) =>
+            app.MapGet("/sessions/{sessionId}/messages", async ([AsParameters] GetChatSessionMessagesRequest request, ISender sender) =>
             {
                 var query = request.Adapt<GetChatSessionMessagesQuery>();
                 var result = await sender.Send(query);

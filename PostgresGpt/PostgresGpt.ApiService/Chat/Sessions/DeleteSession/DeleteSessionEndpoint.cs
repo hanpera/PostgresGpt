@@ -13,7 +13,7 @@ namespace PostgresGpt.ApiService.Chat.Sessions.DeleteSession
                 {
                     var command = new DeleteSessionCommand(id);
                     var result = await sender.Send(command);
-                    
+
                     return Results.NoContent();
                 })
             .WithName("DeleteSession")

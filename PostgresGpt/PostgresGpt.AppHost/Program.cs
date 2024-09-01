@@ -1,7 +1,7 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var azureOpenAiEndpoint = builder.AddParameter("AzureOpeAIEndPoint");
-var azureOpenAKey = builder.AddParameter("AzureOpeAIKey");
+var azureOpenAKey = builder.AddParameter("AzureOpenAIKey");
 var azureOpenAiChatCompletionDeploymentName = builder.AddParameter("AzureOpeAIChatCompletionDeploymentName");
 var azureOpenAiEmbeddingDeploymentName = builder.AddParameter("AzureOpeAImbeddingDeploymentName");
 
