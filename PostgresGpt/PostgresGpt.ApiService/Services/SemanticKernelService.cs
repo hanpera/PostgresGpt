@@ -157,11 +157,19 @@ public class SemanticKernelService : ISemanticKernelService
             }
         };
 
+        try
+        {
+            var result = await kernel.GetRequiredService<IChatCompletionService>().GetChatMessageContentAsync(skChatHistory, settings);
+            string completion = result.Items[0].ToString()!;
 
-        var result = await kernel.GetRequiredService<IChatCompletionService>().GetChatMessageContentAsync(skChatHistory, settings);
+            return completion;
 
-        string completion = result.Items[0].ToString()!;
+        }
+        catch (Exception)
+        {
 
-        return completion;
+            throw;
+        }
+
     }
 }

@@ -39,9 +39,18 @@ public class ChatService
     /// </summary>
     public async Task<List<Message>> GetChatSessionMessagesAsync(string? sessionId)
     {
-        ArgumentNullException.ThrowIfNull(sessionId);
+        try
+        {
+            ArgumentNullException.ThrowIfNull(sessionId);
 
-        return await _dbService.GetSessionMessagesAsync(sessionId); ;
+            return await _dbService.GetSessionMessagesAsync(sessionId); ;
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     /// <summary>
@@ -237,12 +246,21 @@ public class ChatService
 
         //Get the embeddings for the user prompts
         //float[] vectors = await _openAiService.GetEmbeddingsAsync(prompts);
-        float[] vectors = await _semanticKernelService.GetEmbeddingsAsync(prompts);
+        try
+        {
+            float[] vectors = await _semanticKernelService.GetEmbeddingsAsync(prompts);
 
-        //Check the cache for similar vectors
-        string response = await _dbService.GetCacheAsync(vectors, (double)0.01); // _cacheSimilarityScore);
+            //Check the cache for similar vectors
+            string response = await _dbService.GetCacheAsync(vectors, (double)0.01); // _cacheSimilarityScore);
 
-        return (prompts, vectors, response);
+            return (prompts, vectors, response);
+
+        }
+        catch (Exception ex)
+        {
+
+            throw;
+        }
     }
 
     /// <summary>
