@@ -23,10 +23,18 @@ builder.Services.AddValidatorsFromAssembly(assembly);
 builder.Services.AddCarter();
 
 builder.Services.AddSwaggerGen();
-//builder.Services.AddDbContext<ItemContext>(options =>
+//builder.Services.AddDbContext<ChatContext>(options =>
 //        options.UseNpgsql(builder.Configuration.GetConnectionString("TestDB"), o => o.UseVector()));
-builder.AddNpgsqlDbContext<ChatContext>("ChatDB", null,
-    o => o.UseNpgsql(builder.Configuration.GetConnectionString("ChatDB"), o => o.UseVector()));
+//builder.AddNpgsqlDbContext<ChatContext>("ChatDB", null,
+//    o => o.UseNpgsql(builder.Configuration.GetConnectionString("ChatDB"), o => o.UseVector()));
+
+builder.AddNpgsqlDbContext<ChatContext>("ChatDB", configureDbContextOptions: dbContextOptionsBuilder =>
+{
+    dbContextOptionsBuilder.UseNpgsql(builder =>
+    {
+        builder.UseVector();
+    });
+});
 // Add services to the container.
 builder.Services.AddProblemDetails();
 
