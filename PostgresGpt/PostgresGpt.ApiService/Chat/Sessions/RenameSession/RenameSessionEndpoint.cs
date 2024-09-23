@@ -8,7 +8,7 @@ namespace PostgresGpt.ApiService.Chat.Sessions.RenameSession
 
     //public record RenameSessionResponse();
 
-    public class RenameSessionEndpoint (ISender sender)
+    public class RenameSessionEndpoint 
         : ICarterModule
     {
         public void AddRoutes(IEndpointRouteBuilder app)

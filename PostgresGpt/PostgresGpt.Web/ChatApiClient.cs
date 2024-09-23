@@ -5,41 +5,43 @@ namespace PostgresGpt.Web
 {
     public class ChatApiClient(HttpClient httpClient)
     {
-        public async Task<IEnumerable<SessionDto>?> GetAllSessions()
+        public async Task<List<SessionDto>?> GetAllSessions()
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<SessionDto>>("/sessions");
+            return await httpClient.GetFromJsonAsync<List<SessionDto>>("/sessions");
         }
 
         // Get all routes present in project PostgresGpt.ApiService and create the http calls here
         // Start with DeleteSession
-        public async Task DeleteSession(Guid sessionId)
+        public async Task DeleteSession(string sessionId)
         {
             var response = await httpClient.DeleteAsync($"/sessions/{sessionId}");
             response.EnsureSuccessStatusCode();
         }
 
         // Now with InsertSession
-        public async Task InsertSession(SessionDto session)
+        public async Task<SessionDto> InsertSession()
         {
-            var response =  await httpClient.PostAsJsonAsync("/sessions", session);
+            var session = new SessionDto();
+            var response =  await httpClient.PostAsJsonAsync<SessionDto?>("/sessions", null );
             response.EnsureSuccessStatusCode();
+            return await response.Content.ReadFromJsonAsync<SessionDto>();
         }
 
         // Now with RenameSession
-        public async Task RenameSession(Guid sessionId, string newName)
+        public async Task RenameSession(string sessionId, string newName)
         {
             var response = await httpClient.PutAsJsonAsync($"/sessions", new { Id = sessionId, Name = newName });
             response.EnsureSuccessStatusCode();
         }
 
         // Get the Session Messages
-        public async Task<IEnumerable<MessageDto>?> GetSessionMessages(Guid sessionId)
+        public async Task<List<MessageDto>?> GetSessionMessages(string sessionId)
         {
-            return await httpClient.GetFromJsonAsync<IEnumerable<MessageDto>>($"/sessions/{sessionId}/messages");
+            return await httpClient.GetFromJsonAsync<List<MessageDto>>($"/sessions/{sessionId}/messages");
         }
 
         // Get the Chat Completion endpoint
-        public async Task<MessageDto?> GetChatCompletion(Guid sessionId, string promptText)
+        public async Task<MessageDto?> GetChatCompletion(string sessionId, string promptText)
         {
             var responseMessage = await httpClient.PostAsJsonAsync($"/chat", new { SessionId = sessionId, PromptText = promptText });
             responseMessage.EnsureSuccessStatusCode();
@@ -48,7 +50,7 @@ namespace PostgresGpt.Web
         }
 
         // Get the Summarize session endpoint
-        public async Task<SummarizeChatSessionNameResponse?> SummarizeSession(Guid sessionId)
+        public async Task<SummarizeChatSessionNameResponse?> SummarizeSession(string sessionId)
         {
             var response = await httpClient.PostAsJsonAsync($"/chat/summarize", new { SessionId = sessionId });
             response.EnsureSuccessStatusCode();
