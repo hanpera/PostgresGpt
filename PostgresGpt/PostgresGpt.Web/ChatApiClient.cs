@@ -7,7 +7,8 @@ namespace PostgresGpt.Web
     {
         public async Task<List<SessionDto>?> GetAllSessions()
         {
-            return await httpClient.GetFromJsonAsync<List<SessionDto>>("/sessions");
+            var response = await httpClient.GetFromJsonAsync<GetAllSessionsResponse>("/sessions");
+            return response!.Sessions.ToList();
         }
 
         // Get all routes present in project PostgresGpt.ApiService and create the http calls here
@@ -22,9 +23,10 @@ namespace PostgresGpt.Web
         public async Task<SessionDto> InsertSession()
         {
             var session = new SessionDto();
-            var response =  await httpClient.PostAsJsonAsync<SessionDto?>("/sessions", null );
+            var response =  await httpClient.PostAsync("/sessions", null );
             response.EnsureSuccessStatusCode();
-            return await response.Content.ReadFromJsonAsync<SessionDto>();
+            var result = await response.Content.ReadFromJsonAsync<InsertSessionResponse>();
+            return result!.Session;
         }
 
         // Now with RenameSession
@@ -37,7 +39,8 @@ namespace PostgresGpt.Web
         // Get the Session Messages
         public async Task<List<MessageDto>?> GetSessionMessages(string sessionId)
         {
-            return await httpClient.GetFromJsonAsync<List<MessageDto>>($"/sessions/{sessionId}/messages");
+            var response = await httpClient.GetFromJsonAsync<GetChatSessionMessagesResponse>($"/sessions/{sessionId}/messages");
+            return response!.Messages;
         }
 
         // Get the Chat Completion endpoint
@@ -45,8 +48,8 @@ namespace PostgresGpt.Web
         {
             var responseMessage = await httpClient.PostAsJsonAsync($"/chat", new { SessionId = sessionId, PromptText = promptText });
             responseMessage.EnsureSuccessStatusCode();
-            var dto = await responseMessage.Content.ReadFromJsonAsync<MessageDto>();
-            return dto;
+            var result = await responseMessage.Content.ReadFromJsonAsync<GetChatCompletionResponse>();
+            return result!.Message;
         }
 
         // Get the Summarize session endpoint
