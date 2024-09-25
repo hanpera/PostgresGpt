@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using System.Net.Http.Headers;
+using System.Text;
+using Microsoft.AspNetCore.SignalR;
 using PostgresGpt.Web.Models;
 
 namespace PostgresGpt.Web
@@ -22,8 +24,7 @@ namespace PostgresGpt.Web
         // Now with InsertSession
         public async Task<SessionDto> InsertSession()
         {
-            var session = new SessionDto();
-            var response =  await httpClient.PostAsync("/sessions", null );
+            var response = await httpClient.PostAsJsonAsync("/sessions", new StringContent(string.Empty, Encoding.UTF8, "application/json"));
             response.EnsureSuccessStatusCode();
             var result = await response.Content.ReadFromJsonAsync<InsertSessionResponse>();
             return result!.Session;

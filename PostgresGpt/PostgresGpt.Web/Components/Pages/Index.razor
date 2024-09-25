@@ -2,7 +2,7 @@
 @using PostgresGpt.Web.Components.Layout
 @using PostgresGpt.Web.Models
 @rendermode InteractiveServer
-
+<script src="js/site.js"></script>
 
 <PageTitle>Postgres & Azure OpenAI Service</PageTitle>
 <main class="h-100 d-flex flex-row justify-content-start">
@@ -30,11 +30,11 @@
         IsNavMenuCollapsed = !IsNavMenuCollapsed;
     }
 
-    protected override void OnInitialized()
-    {
-        NavMenu = new NavMenu();
-        ChatPane = new ChatPane();
-    }
+    // protected override void OnInitialized()
+    // {
+    //     NavMenu = new NavMenu();
+    //     ChatPane = new ChatPane();
+    // }
 
     public async void LoadChatEventHandlerAsync(SessionDto session)
     {
