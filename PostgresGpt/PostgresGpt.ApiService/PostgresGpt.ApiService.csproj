@@ -26,6 +26,7 @@
 
   <PropertyGroup>
     <NoWarn>$(NoWarn);SKEXP0001,SKEXP0010,SKEXP0050</NoWarn>
+    <UserSecretsId>27c41cf1-4b0f-4227-9e99-9eae8eba2f20</UserSecretsId>
   </PropertyGroup>
 
 </Project>

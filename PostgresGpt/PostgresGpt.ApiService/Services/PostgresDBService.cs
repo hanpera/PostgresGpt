@@ -119,11 +119,12 @@ namespace PostgresGpt.ApiService.Services
         {
             try
             {
+                var distance = 1 - similarityScore;
                 var embedding = new Vector(vectors);
                 var tmp = await _dbContext.Cache.Select(x => new { Value = x, Distance = x.Embeddings.CosineDistance(embedding) }).ToListAsync();
 
                 var response = await _dbContext.Cache
-                    .Where(c => c.Embeddings.CosineDistance(embedding) < similarityScore)
+                    .Where(c => c.Embeddings.CosineDistance(embedding) < distance)
                     .OrderBy(c => c.Embeddings.CosineDistance(embedding))
                     .ToListAsync();
                 string cacheResponse = "";
@@ -156,12 +157,12 @@ namespace PostgresGpt.ApiService.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task CacheRemoveAsync(float[] vectors)
+        public async Task CacheRemoveAsync(float[] vectors, double similarityScore)
         {
-            double similarityScore = 0.01;
+            double distance = 1- similarityScore;
             var embedding = new Vector(vectors);
             var response = await _dbContext.Cache
-                .Where(c => c.Embeddings.CosineDistance(embedding) < similarityScore)
+                .Where(c => c.Embeddings.CosineDistance(embedding) < distance)
                 .OrderByDescending(c => c.Embeddings.CosineDistance(embedding))
                 .ToListAsync();
             _dbContext.Cache.RemoveRange(response);

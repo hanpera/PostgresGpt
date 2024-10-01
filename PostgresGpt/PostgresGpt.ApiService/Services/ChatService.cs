@@ -251,7 +251,7 @@ public class ChatService
             float[] vectors = await _semanticKernelService.GetEmbeddingsAsync(prompts);
 
             //Check the cache for similar vectors
-            string response = await _dbService.GetCacheAsync(vectors, (double)0.01); // _cacheSimilarityScore);
+            string response = await _dbService.GetCacheAsync(vectors, (double)_cacheSimilarityScore); // _cacheSimilarityScore);
 
             return (prompts, vectors, response);
 

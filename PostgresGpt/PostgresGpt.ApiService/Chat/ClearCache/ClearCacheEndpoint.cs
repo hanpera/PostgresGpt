@@ -9,7 +9,7 @@ namespace PostgresGpt.ApiService.Chat.ClearCache
         public void AddRoutes(IEndpointRouteBuilder app)
         {
             app.MapDelete("/cache",
-                async (string id, ISender sender) =>
+                async ( ISender sender) =>
                 {
                     var command = new ClearCacheCommand();
                     var result = await sender.Send(command);

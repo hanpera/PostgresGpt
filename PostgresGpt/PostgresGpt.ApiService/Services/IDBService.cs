@@ -79,7 +79,7 @@ public interface IDBService
     /// Remove a cache item using its vectors.
     /// </summary>
     /// <param name="vectors">Vectors used to perform the semantic search. Similarity Score is set to 0.99 for exact match</param>
-    Task CacheRemoveAsync(float[] vectors);
+    Task CacheRemoveAsync(float[] vectors, double similarityScore);
 
     /// <summary>
     /// Clear the cache of all cache items.
